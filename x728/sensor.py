@@ -7,14 +7,24 @@ from .constants import DOMAIN, SENSOR_TYPES, SENSOR_VOLTAGE, SENSOR_CAPACITY
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup_entry(hass, entry, async_add_entities):
+
+def _setup_x728(i2c_address, i2c_bus):
+    """Initialize the X728 hardware and handler in an executor thread."""
     from smbus import SMBus
+
+    sensor = X728(i2c_address, SMBus(i2c_bus))
+    return sensor, X728Handler(sensor)
+
+
+async def async_setup_entry(hass, entry, async_add_entities):
     i2c_address = entry.data["i2c_address"]
     i2c_bus = entry.data["i2c_bus"]
     name = entry.data.get("name", "X728 Sensor")
 
-    sensor = X728(i2c_address, SMBus(i2c_bus))
-    handler = X728Handler(sensor)
+    # SMBus access is synchronous; keep it off Home Assistant's event loop.
+    sensor, handler = await hass.async_add_executor_job(
+        _setup_x728, i2c_address, i2c_bus
+    )
 
     entities = [
         X728Sensor(handler, sensor_type, name)
