@@ -1,10 +1,13 @@
 {
   "domain": "x728",
-  "name": "Geekworm X728",
-  "version": "1.0.0",
-  "requirements": ["smbus2"],
-  "dependencies": [],
-  "codeowners": [],
+  "name": "Geekworm X728 UPS",
+  "version": "2.0.0",
+  "requirements": ["smbus2>=0.4.3", "gpiod>=2.2.1"],
+  "dependencies": ["frontend", "http"],
+  "codeowners": ["@E5tian"],
   "config_flow": true,
-  "iot_class": "local_polling"
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "single_config_entry": true,
+  "documentation": "https://github.com/E5tian/x728_integration"
 }
