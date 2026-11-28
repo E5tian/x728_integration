@@ -1,0 +1,14 @@
+{
+    "domain": "x728_integration",
+    "name": "Geekworm X728",
+    "codeowners": ["@soukal24"],
+    "config_flow": true,
+    "dependencies": ["frontend", "http", "lovelace"],
+    "documentation": "https://github.com/soukal24/ha_suptronics_ups_x120x",
+    "integration_type": "device",
+    "iot_class": "local_polling",
+    "issue_tracker": "https://github.com/soukal24/ha_suptronics_ups_x120x/issues",
+    "requirements": ["smbus2>=0.4.3", "gpiod>=2.2.1"],
+    "single_config_entry": true,
+    "version": "3.0.0"
+}
